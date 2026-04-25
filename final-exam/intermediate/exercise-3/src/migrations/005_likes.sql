@@ -1,0 +1,5 @@
+CREATE TABLE likes (
+    id INTEGER PRIMARY KEY,
+    post_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL
+);

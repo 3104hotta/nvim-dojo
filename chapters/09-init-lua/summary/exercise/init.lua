@@ -1,0 +1,3 @@
+-- Summary — write your own init.lua from scratch.
+-- Use what you learned in mission-1, mission-2, and mission-3.
+-- See ../goal/init.lua for one possible reference implementation.
