@@ -1,19 +1,24 @@
 # ミッション 2 — Ctrl+d/u・H/M/L でスクロール移動
 
-**難易度**: ★★☆  
+**難易度**: ★★☆
 **目安時間**: 5〜10分
 
 ---
 
 ## 課題
 
-`exercise.rs` を nvim で開き、以下の編集を行え。
-ファイルは100行超あるため、スクロール系コマンドを使わないと時間がかかる。
+`exercise.rs` を nvim で開き、以下4箇所の編集を行え。
+ファイルは190行超あり、編集箇所が **先頭・中央・末尾に散らばっている** ため、
+スクロール系コマンドを使わないと時間がかかる。
 
-1. ファイル末尾の `fn cleanup` 関数内にある `unimplemented!()` を `Ok(())` に変更する
-2. ファイル先頭の `use` 宣言に `use std::time::Duration;` を追加する
-3. ファイル中央付近の `struct Config` の `timeout` フィールドの型を `u32` から `Duration` に変更する
-4. 各 `impl` ブロックの先頭行（`impl` キーワードの行）に移動して確認する
+1. **ファイル末尾** `pub fn cleanup` 関数内、`Ok(())` の直前に
+   `// cleanup complete` というコメント行を追加する
+2. **ファイル先頭** `use std::io;` の次の行に
+   `use std::collections::BTreeMap;` を追加する
+3. **中央上付近** `impl Default for Config` 内の
+   `data_dir: PathBuf::from("/var/data"),` を `"/tmp/data"` に変更する
+4. **中央付近** `impl Server` の `start` メソッド内、`println!` の文字列
+   `"Starting server on {}:{}"` を `"Server starting on {}:{}"` に変更する
 
 ## 制約
 
@@ -25,16 +30,22 @@
 `goal.rs` と同一の状態にすること。
 
 ```
-before: use std::io;
-        （追加）
-after:  use std::io;
-        use std::time::Duration;
+1. （末尾）pub fn cleanup ... {
+       store.cache.clear();
+       server.stop();
++      // cleanup complete
+       Ok(())
+   }
 
-before: timeout: u32,
-after:  timeout: Duration,
+2. （先頭）use std::io;
++  use std::collections::BTreeMap;
+   use std::collections::HashMap;
 
-before:     unimplemented!()
-after:      Ok(())
+3. （中央上）data_dir: PathBuf::from("/var/data"),
+   →           data_dir: PathBuf::from("/tmp/data"),
+
+4. （中央）"Starting server on {}:{}"
+   →     "Server starting on {}:{}"
 ```
 
 ---
@@ -46,7 +57,7 @@ after:      Ok(())
 
 - `gg` でファイル先頭へ、`G` で末尾へ一瞬で移動できる
 - `Ctrl+d` で半画面スクロール → 目的地が近づいたら `H`/`M`/`L` で画面内の行へジャンプ
-- `/unimplemented` で検索すれば一発でジャンプできる
+- `/cleanup` `/Default` `/Starting` のように検索を使うと一発でジャンプできる
 - `zz` でカーソル行を画面中央に寄せると見やすい
 
 </details>
@@ -60,19 +71,22 @@ after:      Ok(())
 
 ```
 1. G              → ファイル末尾へ
-   /unimplemented → 検索でジャンプ
-   ciw            → 単語変更
-   Ok(())<Esc>
+   /Ok(())        → cleanup の Ok(()) を検索
+   O              → 上に新行を作成
+   // cleanup complete<Esc>
 
 2. gg             → ファイル先頭へ
-   j              → use 行の次の行へ
-   O              → 上に新行を作成
-   use std::time::Duration;<Esc>
+   j              → use std::io; の次の行へ
+   O              → 上に新行を作成（または現在行で o の代わりに O）
+   use std::collections::BTreeMap;<Esc>
 
-3. /timeout       → 検索
-   f u            → 'u' (u32) へジャンプ
-   cw             → 単語変更
-   Duration<Esc>
+3. /var/data      → 検索でジャンプ
+   ciw            → "var" を変更（または cw, f/ で位置調整）
+   tmp<Esc>
+
+4. /Starting      → 検索でジャンプ
+   ct{            → "{" の手前まで変更
+   Server starting on <Esc>
 ```
 
 </details>
@@ -87,5 +101,6 @@ after:      Ok(())
 - `50%` でファイルの50%位置（中央付近）へジャンプ → `H`/`M`/`L` で微調整
 - `:42` のように行番号を直接指定して移動
 - `Ctrl+f` / `Ctrl+b` で1画面スクロール（大きいファイルに有効）
+- `*` でカーソル位置の単語を検索
 
 </details>

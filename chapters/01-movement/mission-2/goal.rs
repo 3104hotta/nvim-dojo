@@ -1,7 +1,7 @@
 use std::io;
+use std::collections::BTreeMap;
 use std::collections::HashMap;
 use std::path::PathBuf;
-use std::time::Duration;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum LogLevel {
@@ -15,7 +15,7 @@ pub enum LogLevel {
 pub struct Config {
     pub host: String,
     pub port: u16,
-    pub timeout: Duration,
+    pub timeout: u32,
     pub max_connections: usize,
     pub log_level: LogLevel,
     pub data_dir: PathBuf,
@@ -26,10 +26,10 @@ impl Default for Config {
         Config {
             host: "127.0.0.1".to_string(),
             port: 8080,
-            timeout: Duration::from_secs(30),
+            timeout: 30,
             max_connections: 100,
             log_level: LogLevel::Info,
-            data_dir: PathBuf::from("/var/data"),
+            data_dir: PathBuf::from("/tmp/data"),
         }
     }
 }
@@ -45,7 +45,7 @@ impl Config {
         self
     }
 
-    pub fn with_timeout(mut self, timeout: Duration) -> Self {
+    pub fn with_timeout(mut self, timeout: u32) -> Self {
         self.timeout = timeout;
         self
     }
@@ -76,7 +76,7 @@ impl Server {
             return Err(io::Error::new(io::ErrorKind::Other, "already running"));
         }
         println!(
-            "Starting server on {}:{}",
+            "Server starting on {}:{}",
             self.config.host, self.config.port
         );
         self.running = true;
@@ -147,6 +147,7 @@ impl DataStore {
 pub fn cleanup(server: &mut Server, store: &mut DataStore) -> Result<(), io::Error> {
     store.cache.clear();
     server.stop();
+    // cleanup complete
     Ok(())
 }
 
@@ -186,9 +187,9 @@ mod tests {
         let config = Config::default()
             .with_host("0.0.0.0")
             .with_port(9090)
-            .with_timeout(Duration::from_secs(60));
+            .with_timeout(60);
         assert_eq!(config.host, "0.0.0.0");
         assert_eq!(config.port, 9090);
-        assert_eq!(config.timeout, Duration::from_secs(60));
+        assert_eq!(config.timeout, 60);
     }
 }
