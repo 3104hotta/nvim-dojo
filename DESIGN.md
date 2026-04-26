@@ -125,18 +125,16 @@ Rust に慣れていないと「どこを連鎖して直すべきか」を見つ
 
 第7章は対象外（案④で背景説明を追加する方針）。それ以外で Rust 知識を要求しているのは以下 6 件:
 
-| 章 | ミッション | 理由 |
-|----|-----------|------|
-| 1 | mission-2 | `u32` → `Duration` の型カスケード |
-| 1 | summary | `String` → `url::Url` の型カスケード |
-| 2 | mission-2 | `Vec<String>`・`&[u8]`・`?` のセマンティクス |
-| 2 | summary | `Response::new()` メソッド設計・`todo!()` |
-| 3 | mission-3 | `unwrap()` → `?`・`impl Trait for Struct` |
-| 4 | summary | `Box::new(...)` → `.into()` のトレイト変換 |
+| 章 | ミッション | 状態 | 理由 |
+|----|-----------|------|------|
+| 1 | mission-2 | ✅ 完了 | `u32` → `Duration` の型カスケード |
+| 1 | summary | ✅ 完了 | `String` → `url::Url` の型カスケード |
+| 2 | mission-2 | ✅ 完了 | `Vec<String>`・`&[u8]`・`?` のセマンティクス |
+| 2 | summary | ✅ 完了 | `Response::new()` メソッド設計・`todo!()` |
+| 3 | mission-3 | ✅ 完了 | `unwrap()` → `?`・`impl Trait for Struct` |
+| 4 | summary | ✅ 完了 | `Box::new(...)` → `.into()` のトレイト変換 |
 
-第1・2章に集中しており、特に summary 系が型システム前提になっている傾向。
-
-着手順: mission-2 (第1章) から。
+すべて 案② 適用済み。残作業は **第7章 LSP に案④の背景説明を追加** のみ。
 
 ---
 

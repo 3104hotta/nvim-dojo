@@ -13,6 +13,7 @@ pub struct Task {
 /// Returns the output bytes on success.
 /// May fail if the payload is malformed.
 /// # Example
+#[allow(dead_code)]
 impl Task {
     pub fn run(&self) -> Result<Vec<u8>, AppError> {
         let out = self.payload
@@ -61,6 +62,7 @@ pub enum AppError {
     Io(std::io::Error),
 }
 
+#[allow(dead_code)]
 impl fmt::Display for AppError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
@@ -71,25 +73,26 @@ impl fmt::Display for AppError {
     }
 }
 
-pub fn wrap_1(e: std::io::Error) -> Box<AppError> { AppError::from(e).into() }
-pub fn wrap_2(e: std::io::Error) -> Box<AppError> { AppError::from(e).into() }
-pub fn wrap_3(e: std::io::Error) -> Box<AppError> { AppError::from(e).into() }
-pub fn wrap_4(e: std::io::Error) -> Box<AppError> { AppError::from(e).into() }
-pub fn wrap_5(e: std::io::Error) -> Box<AppError> { AppError::from(e).into() }
+pub fn wrap_1(e: std::io::Error) -> Box<AppError> { Box::new(AppError::from(e)) } // helper
+pub fn wrap_2(e: std::io::Error) -> Box<AppError> { Box::new(AppError::from(e)) } // helper
+pub fn wrap_3(e: std::io::Error) -> Box<AppError> { Box::new(AppError::from(e)) } // helper
+pub fn wrap_4(e: std::io::Error) -> Box<AppError> { Box::new(AppError::from(e)) } // helper
+pub fn wrap_5(e: std::io::Error) -> Box<AppError> { Box::new(AppError::from(e)) } // helper
 
+#[allow(dead_code)]
 impl From<std::io::Error> for AppError {
     fn from(e: std::io::Error) -> Self { AppError::Io(e) }
 }
 
 pub fn step_a(data: &[u8]) -> Result<Vec<u8>, AppError> {
-    std::fs::read("/tmp/a").map_err(|e| { tracing::error!(err = %e); e }).map_err(AppError::Io)?;
+    std::fs::read("/tmp/a").map_err(|e| eprintln!("{}", e)).map_err(AppError::Io)?;
     Ok(data.to_vec())
 }
 pub fn step_b(data: &[u8]) -> Result<Vec<u8>, AppError> {
-    std::fs::read("/tmp/b").map_err(|e| { tracing::error!(err = %e); e }).map_err(AppError::Io)?;
+    std::fs::read("/tmp/b").map_err(|e| eprintln!("{}", e)).map_err(AppError::Io)?;
     Ok(data.to_vec())
 }
 pub fn step_c(data: &[u8]) -> Result<Vec<u8>, AppError> {
-    std::fs::read("/tmp/c").map_err(|e| { tracing::error!(err = %e); e }).map_err(AppError::Io)?;
+    std::fs::read("/tmp/c").map_err(|e| eprintln!("{}", e)).map_err(AppError::Io)?;
     Ok(data.to_vec())
 }

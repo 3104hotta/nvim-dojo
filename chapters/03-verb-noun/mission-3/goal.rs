@@ -8,12 +8,6 @@ pub fn alpha(x: i32) -> i32 {
     shifted
 }
 
-pub fn alpha_copy(x: i32) -> i32 {
-    let doubled = x * 2;
-    let shifted = doubled + 1;
-    shifted
-}
-
 pub fn beta(x: i32) -> Result<String, String> {
     if x < 0 {
         return Err(format!("negative input: {}", x));
@@ -22,16 +16,22 @@ pub fn beta(x: i32) -> Result<String, String> {
 }
 
 pub fn gamma(x: i32) -> i32 {
+    println!("delta: {}", x);
     x * x
 }
 
-pub fn delta(x: i32) -> Result<String, String> {
+pub fn alpha2(x: i32) -> i32 {
+    let doubled = x * 2;
+    let shifted = doubled + 1;
+    shifted
+}
+
+pub fn delta(x: i32) -> () {
     println!("delta: {}", x);
-    Ok(format!("value={}", x))
 }
 
 pub fn public_api(input: &str) -> Result<Vec<i32>, String> {
-    let msg = "v";
+    let msg = "hello world";
     let items: Vec<i32> = input
         .split_whitespace()
         .filter_map(|s| s.parse().ok())
@@ -56,3 +56,5 @@ impl fmt::Display for Status {
         }
     }
 }
+
+// hello world

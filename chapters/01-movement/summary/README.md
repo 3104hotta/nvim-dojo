@@ -1,6 +1,6 @@
 # 章末総合演習 — 移動コマンドを駆使してコードリーディング
 
-**難易度**: ★★★  
+**難易度**: ★★★
 **目安時間**: 15〜20分
 
 ---
@@ -8,29 +8,53 @@
 ## シナリオ
 
 小規模な HTTP クライアントライブラリのコードレビューを任された。
-`exercise.rs` を読み解きながら、指定された変更をすべて `hjkl` なしで完了させよ。
+`exercise.rs`（180行超）を読み解きながら、指定された変更をすべて **`hjkl` なしで** 完了させよ。
+編集箇所はファイル全体に散らばっているので、章で学んだ移動コマンドを総動員すること。
 
 ## 課題
 
 以下の7項目を完了させること:
 
-1. `struct HttpClient` の `base_url` フィールドを `base_url: String` から `base_url: url::Url` に変更する（型のみ変更、フィールド名は変えない）
-2. ファイル先頭の `use` ブロックに `use url::Url;` を追加する
-3. `fn new` 関数の引数 `base_url: &str` を `base_url: Url` に変更する
-4. `fn get` 関数内の `format!("{}/{}",` の部分を `format!("{}/{}",` → `format!("{}{}", self.base_url,` に変更する
-5. 最も行数の多い関数を探し、その関数名の行に `// NOTE: refactor candidate` コメントを追加する
-6. `todo!()` マクロが含まれる行をすべて削除する（何行あるか数えてから削除する）
-7. ファイル末尾に `// reviewed by: <your-name>` を追記する
+1. **先頭付近** `use std::io;` の次の行に `use std::path::PathBuf;` を追加する
+2. **先頭コメント** `// HTTP client library` を `// HTTP client (review pass)` に変更する
+3. **中央上** `HttpClient::new` 内の `"nvim-dojo-client/1.0"` を `"nvim-dojo-client/2.0"` に変更する
+4. **中央** `pub fn get` の `println!("GET {}", url);` を `println!("[GET] {}", url);` に変更する
+5. **中央** `pub fn delete` の `println!("DELETE {}", url);` を `println!("[DELETE] {}", url);` に変更する
+6. **中央下** `HttpError::Unknown` の Display 実装で `"unknown error"` を `"unknown HTTP error"` に変更する
+7. **末尾付近** `build_query_string` 関数の閉じ `}` の次に `// reviewed by: <your-name>` の行を追加する
 
 ## 制約
 
 - `hjkl` 移動禁止
-- 課題5の「最も行数の多い関数を探す」には `/fn ` 検索 + `n` で順に確認すること（`:grep` 禁止）
-- 課題6の `todo!()` は何行あるか、先に検索でカウントしてから削除する
+- `f`・`t`・`w`・`b`・`e`・`0`・`$`・`gg`・`G`・`H`・`M`・`L`・`Ctrl+d`・`Ctrl+u` をフル活用
+- `/`・`?` での検索もOK
 
 ## ゴール
 
 `goal.rs` と同一の状態にすること。
+
+```
+1. （先頭）  use std::io;
++            use std::path::PathBuf;
+
+2. （先頭）  // HTTP client library
+   →         // HTTP client (review pass)
+
+3. （中央上）"nvim-dojo-client/1.0"
+   →         "nvim-dojo-client/2.0"
+
+4. （中央）  println!("GET {}", url);
+   →         println!("[GET] {}", url);
+
+5. （中央）  println!("DELETE {}", url);
+   →         println!("[DELETE] {}", url);
+
+6. （中央下）"unknown error"
+   →         "unknown HTTP error"
+
+7. （末尾）  pub fn build_query_string(...) { ... }
++            // reviewed by: <your-name>
+```
 
 ---
 
@@ -39,10 +63,12 @@
 <details>
 <summary>ヒントを見る</summary>
 
-- `%` で括弧の対応箇所へジャンプすると関数の終端を素早く見つけられる
-- `/todo!` で全 `todo!()` を検索 → `n` で次へ → `dd` で削除 → `n.` で繰り返し
-- `G` → `o` でファイル末尾に新行を追加
-- `Ctrl+o` でジャンプリストを辿れば「さっきいた関数」に戻れる
+- `gg` / `G` でファイル先頭・末尾へ一発移動
+- 検索 `/use std::io` `/GET` `/DELETE` `/unknown error` でジャンプが速い
+- `Ctrl+d` で半画面スクロールしながら全体感を掴む → `H`/`M`/`L` で画面内の行へ
+- `ci"` でクォート内の文字列を変更
+- `ct,` `ct)` で「次の `,` `)` 手前まで」を変更
+- `o` でカーソル行の下、`O` で上に新しい行を作成
 
 </details>
 
@@ -54,11 +80,38 @@
 <summary>解答を見る</summary>
 
 ```
-課題2: gg → use の最終行へ移動 → o → use url::Url;<Esc>
-課題1: /base_url → cW → base_url: url::Url
-課題3: /fn new → f& → cw → Url
-課題6: /todo! → dd → n → dd → （繰り返し）
-課題7: G → o → // reviewed by: <your-name><Esc>
+1. gg            → ファイル先頭
+   /std::io      → 検索でジャンプ
+   o             → 下に新行
+   use std::path::PathBuf;<Esc>
+
+2. /HTTP client  → 検索
+   f l           → "library" の l へ
+   ct<Enter>     → 行末まで変更（または ci( で括弧内も）
+   (review pass)<Esc>
+   # 簡単には: 行頭から `cf;` で行末まで変更しても可
+
+3. /1.0          → 検索でジャンプ
+   r 2           → '1' を '2' に置換 （あるいは f1 → r2）
+
+4. /GET          → 検索
+   f"            → '"' へ
+   ci"           → クォート内変更
+   [GET] {}<Esc>
+
+5. /DELETE       → 検索
+   f"            → '"' へ
+   ci"           → クォート内変更
+   [DELETE] {}<Esc>
+
+6. /unknown error → 検索
+   ci"           → クォート内変更
+   unknown HTTP error<Esc>
+
+7. /build_query_string → 検索
+   %             → 関数本体の閉じ '}' へジャンプ
+   o             → 下に新行
+   // reviewed by: <your-name><Esc>
 ```
 
 </details>
@@ -67,9 +120,9 @@
 
 ## 振り返り
 
-- 今回の課題で最も時間がかかった移動はどれか？
+- 7箇所のうち、最も時間がかかったのはどれか？
 - `hjkl` を使いたくなった瞬間はあったか？そのときどのコマンドが代替になったか？
-- 次回同じファイルを編集するとしたら、どの操作を改善できるか？
+- 検索（`/`）と画面内ジャンプ（`H`/`M`/`L`）、どちらをよく使ったか？
 
 ---
 

@@ -17,8 +17,8 @@ impl Handler {
 
     pub fn handle_get(&self, path: &str) -> Response {
         match self.routes.get(path) {
-            Some(body) => Response::ok(body),
-            None => Response::not_found(),
+            Some(body) => Response::new(200, body),
+            None => Response::new(404, "Missing"),
         }
     }
 
@@ -27,14 +27,14 @@ impl Handler {
             return Response::new(400, "Bad Request");
         }
         println!("POST {} len={}", path, body.len());
-        Response::ok("Created")
+        Response::new(200, "Created")
     }
 
     pub fn handle_delete(&self, path: &str) -> Response {
         if self.routes.contains_key(path) {
-            Response::ok("Deleted")
+            Response::new(200, "Created")
         } else {
-            Response::not_found()
+            Response::new(404, "Missing")
         }
     }
 
@@ -57,14 +57,6 @@ pub struct Response {
 impl Response {
     pub fn new(status: u16, body: &str) -> Self {
         Response { status, body: body.to_string() }
-    }
-
-    pub fn ok(body: &str) -> Self {
-        Response::new(200, body)
-    }
-
-    pub fn not_found() -> Self {
-        Response::new(404, "Not Found")
     }
 }
 

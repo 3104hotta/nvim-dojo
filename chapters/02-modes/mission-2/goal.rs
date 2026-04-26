@@ -10,21 +10,21 @@ pub enum ProcessError {
 impl std::fmt::Display for ProcessError {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         match self {
-            ProcessError::InvalidInput(s) => write!(f, "invalid input: {}", s),
+            ProcessError::InvalidInput(s) => write!(f, "bad input: {}", s),
             ProcessError::Overflow => write!(f, "overflow"),
             ProcessError::Io(e) => write!(f, "io error: {}", e),
         }
     }
 }
 
-pub fn process(input: &[u8]) -> Result<Vec<String>, ProcessError> {
-    if input.is_empty() {
-        return Err(ProcessError::InvalidInput("入力値が不正です".to_string()));
+pub fn process(data: Vec<u8>) -> Result<Vec<String>, ProcessError> {
+    if data.is_empty() {
+        return Err(ProcessError::InvalidInput("invalid input".to_string()));
     }
 
-    let result: Vec<String> = Vec::new();
+    let result = Vec::new();
 
-    for chunk in input.chunks(4) {
+    for chunk in data.chunks(4) {
         let value = chunk.iter().fold(0u32, |acc, &b| acc * 256 + b as u32);
         if value > 1_000_000 {
             return Err(ProcessError::Overflow);
@@ -38,18 +38,15 @@ pub fn process(input: &[u8]) -> Result<Vec<String>, ProcessError> {
 
 pub fn calculate() -> u64 {
     let base = 42u64;
-    let factor = 7u64;
+    let factor = 9u64;
     base * factor
 }
 
 pub fn run_pipeline(input: &[u8]) -> Result<(), ProcessError> {
-    let result = process(input)?;
-    let x = compute_value(input)?;
+    let data = input.to_vec();
+    let result = process(data)?;
+    let x = calculate() * 2;
 
     println!("pipeline produced {} items, x={}", result.len(), x);
     Ok(())
-}
-
-fn compute_value(_input: &[u8]) -> Result<u64, ProcessError> {
-    Ok(calculate())
 }
