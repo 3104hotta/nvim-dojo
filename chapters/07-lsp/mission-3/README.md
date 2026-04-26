@@ -62,6 +62,22 @@
 
 ---
 
+## Rust 背景（読み飛ばし可）
+
+このミッションは LSP の rename / code action / format を使ったリファクタ練習。
+題材で扱う Rust 概念の最低限のメモ。
+
+- **トレイト** — 「型が満たすべきメソッドの契約」。例: `Display` トレイトを実装すると `println!("{}", value)` で表示できるようになる
+- **`Display` の `fmt` メソッド** — シグネチャは `fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result`。`'_` は無名ライフタイム、`Result` は成功/失敗を表す。`write!(f, "...", args)` マクロで `f` に書き出す
+- **命名規約** — Rust では関数・変数は `snake_case`、型は `PascalCase`、定数は `SCREAMING_SNAKE_CASE`。LSP の rename はこれに沿った命名なら警告されない
+- **`derive` マクロ** — `#[derive(Debug, Clone)]` で「`Debug` トレイトと `Clone` トレイトの実装を自動生成」する
+- **code action "Add missing impl items"** — トレイトに含まれる未実装メソッドのシグネチャだけを生成してくれる（中身は `todo!()` になる）
+
+LSP の `<leader>rn` (rename) や `<leader>ca` (code action) は **シグネチャ生成や名前の一括変更**を任せられる。
+中身のロジック（`write!` で何を出力するか等）は手で書く必要がある点に注意。
+
+---
+
 ## 演習リセット
 
 演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
