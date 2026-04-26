@@ -68,3 +68,18 @@
 - `yib` と `ya(` は `yi(` と `ya(` の別名
 
 </details>
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 03-verb-noun/mission-1
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```

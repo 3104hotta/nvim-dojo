@@ -74,3 +74,18 @@
 - `:'<,'>s/pattern/replace/g` でビジュアル選択範囲だけ置換
 
 </details>
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 05-search-replace/mission-2
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```

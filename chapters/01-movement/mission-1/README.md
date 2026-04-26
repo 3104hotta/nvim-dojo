@@ -92,3 +92,18 @@ after:      host: "127.0.0.1".to_string(),
 - `:%s/\<path\>/file_path/g` で一括置換（ただし引数以外の `path` も変わるので注意）
 
 </details>
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 01-movement/mission-1
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```

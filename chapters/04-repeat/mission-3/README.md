@@ -87,3 +87,18 @@ C-5: /use crate.*Error; → ci{ → Error, Result<Esc>
 - `qA`（大文字）でレジスタ `a` のマクロに**追記**できる
 
 </details>
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 04-repeat/mission-3
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```

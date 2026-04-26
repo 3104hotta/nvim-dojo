@@ -78,3 +78,18 @@
 - `?handler` で後方検索し `N` で前方に進む（通常の検索方向と逆になる）
 
 </details>
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 05-search-replace/mission-1
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```

@@ -103,3 +103,18 @@ let result_8 = compute(8).unwrap_or(0);
 - マクロの中で `*`（単語検索）や `n`（次のマッチ）を使うとより汎用的なマクロになる
 
 </details>
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 04-repeat/mission-2
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```

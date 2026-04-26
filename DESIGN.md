@@ -162,10 +162,10 @@ Rust に慣れていないと「どこを連鎖して直すべきか」を見つ
 - 内容: `scripts/reset.sh` の使い方、または個別に `git checkout -- exercise.rs`
 - 初見の人が commit/push して詰む事故を防ぐ
 
-### 未着手
+### 実装状況
 
-- `scripts/reset.sh` の実装
-- 各ミッション README へのリセット手順追記（共通テンプレート化）
+- ✅ `scripts/reset.sh` 実装済み（引数なしで全リセット、章・ミッション単位指定も可）
+- ✅ 各ミッション README へのリセット手順追記済み（exercise.* がある 22 ファイル）
 
 ---
 

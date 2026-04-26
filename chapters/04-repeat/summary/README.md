@@ -50,3 +50,18 @@ after:  .map_err(|e| { tracing::error!(err = %e); e })?;
 | マクロの末尾に `j` を入れる理由は？ | |
 | `{N}@a` と `:5,15normal @a` の使い分けは？ | |
 | `cgn` + `.` が `n.` より強い場面は？ | |
+
+---
+
+## 演習リセット
+
+演習で `exercise.rs` を編集した後、コミット前に元の状態へ戻すこと。
+そうしないと次回の演習で「最初から `goal.rs` と同じ」になってしまう。
+
+```bash
+# このミッションだけリセット
+scripts/reset.sh 04-repeat/summary
+
+# 全ミッションをまとめてリセット
+scripts/reset.sh
+```
