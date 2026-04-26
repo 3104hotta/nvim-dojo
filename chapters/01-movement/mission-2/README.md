@@ -11,8 +11,8 @@
 ファイルは190行超あり、編集箇所が **先頭・中央・末尾に散らばっている** ため、
 スクロール系コマンドを使わないと時間がかかる。
 
-1. **ファイル末尾** `pub fn cleanup` 関数内、`Ok(())` の直前に
-   `// cleanup complete` というコメント行を追加する
+1. **ファイル末尾** `pub fn cleanup` 関数内の `unimplemented!()` を
+   `Ok(())` に変更する
 2. **ファイル先頭** `use std::io;` の次の行に
    `use std::collections::BTreeMap;` を追加する
 3. **中央上付近** `impl Default for Config` 内の
@@ -30,12 +30,8 @@
 `goal.rs` と同一の状態にすること。
 
 ```
-1. （末尾）pub fn cleanup ... {
-       store.cache.clear();
-       server.stop();
-+      // cleanup complete
-       Ok(())
-   }
+1. （末尾）unimplemented!()
+   →     Ok(())
 
 2. （先頭）use std::io;
 +  use std::collections::BTreeMap;
@@ -71,9 +67,9 @@
 
 ```
 1. G              → ファイル末尾へ
-   /Ok(())        → cleanup の Ok(()) を検索
-   O              → 上に新行を作成
-   // cleanup complete<Esc>
+   /unimplemented → 検索でジャンプ
+   ciw            → 単語変更
+   Ok(())<Esc>
 
 2. gg             → ファイル先頭へ
    j              → use std::io; の次の行へ

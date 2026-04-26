@@ -147,7 +147,6 @@ impl DataStore {
 pub fn cleanup(server: &mut Server, store: &mut DataStore) -> Result<(), io::Error> {
     store.cache.clear();
     server.stop();
-    // cleanup complete
     Ok(())
 }
 
