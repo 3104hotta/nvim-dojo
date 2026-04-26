@@ -3,17 +3,26 @@
 PROGRESS_FILE="$(dirname "$0")/progress.md"
 
 declare -a CHAPTER_NAMES=(
-  "第1章  移動の高速化        "
-  "第2章  モードとインサート   "
-  "第3章  動詞＋名詞          "
-  "第4章  繰り返しの3種       "
-  "第5章  検索・置換          "
-  "第6章  ファイル・バッファ  "
-  "第7章  LSP                "
-  "第8章  git 操作           "
-  "第9章  init.lua           "
-  "最終総合演習               "
+  "第1章  移動の高速化"
+  "第2章  モードとインサート"
+  "第3章  動詞＋名詞"
+  "第4章  繰り返しの3種"
+  "第5章  検索・置換"
+  "第6章  ファイル・バッファ"
+  "第7章  LSP"
+  "第8章  git 操作"
+  "第9章  init.lua"
+  "最終総合演習"
 )
+
+pad_right() {
+  python3 -c '
+import sys, unicodedata
+s, target = sys.argv[1], int(sys.argv[2])
+w = sum(2 if unicodedata.east_asian_width(c) in ("W","F","A") else 1 for c in s)
+sys.stdout.write(s + " " * max(0, target - w))
+' "$1" "$2"
+}
 
 declare -a SECTION_PATTERNS=(
   "第1章"
@@ -75,7 +84,8 @@ for i in "${!SECTION_PATTERNS[@]}"; do
   done < "$PROGRESS_FILE"
 
   b=$(bar "$done_count" "$all_count")
-  printf "  %s %s  %d/%d\n" "$name" "$b" "$done_count" "$all_count"
+  padded=$(pad_right "$name" 26)
+  printf "  %s  %s  %d/%d\n" "$padded" "$b" "$done_count" "$all_count"
 
   total_done=$((total_done + done_count))
   total_all=$((total_all + all_count))
