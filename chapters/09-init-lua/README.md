@@ -7,6 +7,20 @@
 
 ---
 
+## API 名前空間（接頭辞）
+
+| 名前空間 | 由来 | 用途 |
+|----------|------|------|
+| `vim.opt` | **opt**ions | エディタオプション（`:set` の lua 版） |
+| `vim.g` | **g**lobal | グローバル変数（`g:foo` の lua 版） |
+| `vim.keymap` | **keymap** | キーマッピング |
+| `vim.api` | **api** | 低レベル API（autocmd・buffer 操作など） |
+| `vim.lsp` | **lsp** | 組み込み LSP |
+| `vim.fs` | **f**ile**s**ystem | ファイル探索ユーティリティ |
+| `vim.diagnostic` | **diagnostic** | 診断（エラー・警告）の操作 |
+
+---
+
 ## コマンド早見表
 
 ### 基本オプション（`vim.opt`）
@@ -48,6 +62,17 @@ vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true })
 vim.keymap.set('t', '<C-n>', '<C-\\><C-n>', { desc = "Exit terminal mode" })
 ```
 
+### `mode` の由来
+
+| 文字 | 由来 |
+|------|------|
+| `'n'` | **n**ormal |
+| `'i'` | **i**nsert |
+| `'v'` | **v**isual（ビジュアル + select 両方） |
+| `'x'` | （visual のみ。`v` の補集合的位置）|
+| `'t'` | **t**erminal |
+| `'c'` | **c**ommand-line |
+
 ### leader キーの設定
 
 ```lua
@@ -55,6 +80,9 @@ vim.g.mapleader      = " "   -- スペースを leader に
 vim.g.maplocalleader = "\\"  -- ローカル leader
 -- ※ keymap.set より前に書く必要がある
 ```
+
+> 💡 `mapleader` の **leader** は「先導者」。
+> プラグインや個人ショートカットの「接頭キー」として使う共通の入り口を意味する。
 
 ### 組み込み LSP の起動（nvim 0.10+）
 
@@ -100,15 +128,21 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 })
 ```
 
+イベント名の由来:
+- `BufReadPre` / `BufReadPost` — buffer 読み込みの **Pre/Post**
+- `BufWritePre` / `BufWritePost` — buffer 書き込みの Pre/Post
+- `LspAttach` — LSP がバッファに **attach** したとき
+- `TermOpen` — **term**inal が **open** されたとき
+
 ### デバッグ・確認コマンド
 
-| コマンド | 動作 |
-|----------|------|
-| `:source %` | 現在の init.lua を再読み込み |
-| `:checkhealth` | nvim の状態チェック |
-| `:verbose map {key}` | キーマッピングの定義元を確認 |
-| `:lua print(vim.inspect(vim.opt.tabstop:get()))` | オプション値の確認 |
-| `:messages` | 直前のメッセージを確認 |
+| コマンド | 由来 | 動作 |
+|----------|------|------|
+| `:source %` | **source**（読み込み）+ `%` 現在ファイル | 現在の init.lua を再読み込み |
+| `:checkhealth` | **check** + **health** | nvim の状態チェック |
+| `:verbose map {key}` | **verbose**（詳細） | キーマッピングの定義元を確認 |
+| `:lua print(vim.inspect(vim.opt.tabstop:get()))` | **inspect** | オプション値の確認 |
+| `:messages` | **messages** | 直前のメッセージを確認 |
 
 ---
 

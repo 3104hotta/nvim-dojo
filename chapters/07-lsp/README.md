@@ -25,42 +25,42 @@ LSP の起動設定は [第9章](../09-init-lua/) で扱う。本章の演習は
 
 ### ナビゲーション
 
-| コマンド | 動作 |
-|----------|------|
-| `gd` | 定義元へジャンプ（go to definition） |
-| `gD` | 宣言へジャンプ（go to declaration） |
-| `gr` | 参照一覧を quickfix に表示（go to references） |
-| `gI` | 実装へジャンプ（go to implementation） |
-| `Ctrl+o` | ジャンプ前の位置に戻る |
-| `Ctrl+t` | タグスタックを戻る |
+| コマンド | 由来 | 動作 |
+|----------|------|------|
+| `gd` | **g**o to **d**efinition | 定義元へジャンプ |
+| `gD` | **g**o to **D**eclaration | 宣言へジャンプ |
+| `gr` | **g**o to **r**eferences | 参照一覧を quickfix に表示 |
+| `gI` | **g**o to **I**mplementation | 実装へジャンプ |
+| `Ctrl+o` | **o**lder（古い位置） | ジャンプ前の位置に戻る |
+| `Ctrl+t` | **t**ag stack | タグスタックを戻る |
 
 ### 情報表示
 
-| コマンド | 動作 |
-|----------|------|
-| `K` | カーソル下シンボルのドキュメントを表示 |
-| `Ctrl+k` | シグネチャヘルプを表示（関数引数の型情報） |
-| `[d` | 前の診断（エラー・警告）へ |
-| `]d` | 次の診断へ |
-| `:lua vim.diagnostic.open_float()` | 現在行の診断をフロートで表示 |
-| `:lua vim.diagnostic.setqflist()` | 全診断を quickfix に出力 |
+| コマンド | 由来 | 動作 |
+|----------|------|------|
+| `K` | **K**eyword help（man ページ参照の流用） | カーソル下シンボルのドキュメント表示 |
+| `Ctrl+k` | （関数シグネチャ）| シグネチャヘルプを表示 |
+| `[d` | 前の **d**iagnostic | 前の診断（エラー・警告）へ |
+| `]d` | 次の **d**iagnostic | 次の診断へ |
+| `:lua vim.diagnostic.open_float()` | **diagnostic** + フロート表示 | 現在行の診断を表示 |
+| `:lua vim.diagnostic.setqflist()` | quickfix に出力 | 全診断を quickfix に出力 |
 
 ### 編集支援
 
-| コマンド | 動作 |
-|----------|------|
-| `:lua vim.lsp.buf.format()` | ファイルをフォーマット |
-| `:lua vim.lsp.buf.rename()` | シンボルをリネーム |
-| `:lua vim.lsp.buf.code_action()` | コードアクションを表示 |
-| `Ctrl+x Ctrl+o` | オムニ補完（LSP ベース） |
+| コマンド | 由来 | 動作 |
+|----------|------|------|
+| `:lua vim.lsp.buf.format()` | **format** | ファイルをフォーマット |
+| `:lua vim.lsp.buf.rename()` | **rename** | シンボルをリネーム |
+| `:lua vim.lsp.buf.code_action()` | **code action** | コードアクションを表示 |
+| `Ctrl+x Ctrl+o` | **x** モード + **o**mni（全方位補完）| オムニ補完（LSP ベース） |
 
 ### LSP の状態確認
 
-| コマンド | 動作 |
-|----------|------|
-| `:lua vim.lsp.get_active_clients()` | アクティブな LSP クライアント一覧 |
-| `:LspInfo` | LSP の接続状態（nvim 0.10+） |
-| `:lua vim.lsp.buf.hover()` | `K` と同等（hover ドキュメント） |
+| コマンド | 由来 | 動作 |
+|----------|------|------|
+| `:lua vim.lsp.get_active_clients()` | active clients | アクティブな LSP クライアント一覧 |
+| `:LspInfo` | **LSP info** | LSP の接続状態（nvim 0.10+） |
+| `:lua vim.lsp.buf.hover()` | **hover** | `K` と同等（hover ドキュメント） |
 
 ### 推奨キーマッピング（第9章で設定）
 
